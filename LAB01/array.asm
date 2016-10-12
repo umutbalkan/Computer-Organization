@@ -10,6 +10,7 @@
 	prompt: .asciiz "\nEnter the size of the array: "
 	enter:  .asciiz "Enter the value:"
 	fancy:  .asciiz " "
+	newline: .asciiz	"\n"
 	
 		.text		# instructions follow this line
 	main:			# indicates start of code (first instruction to execute)
@@ -44,7 +45,7 @@
 	
 	display:
 	slt	$t0,$s2,$t2		# i < t2
-	beq	$t0,$zero, reverse	# if not then next.
+	beq	$t0,$zero, done	# if not then next.
 	sll 	$t0,$s2,2		# $t0 = i*4 (byte offset)
 	add 	$t0,$t0,$s0		# address of array[i]
 	lw 	$a0,($t0)
@@ -56,22 +57,6 @@
 	addi 	$s2,$s2,1		# i += 1
 	j display			# repeat
 
-
-	reverse:
-	slt	$t0, $s3,$t2		
-	beq	$t0,$zero, done	# if not then next.
-	addi 	$s2,$s2,-1		# i($s2) -= 1
-	addi	$s3, $s3, 1		# i($s1 += 1
-	sll 	$t0,$s2,2		# $t0 = i*4 (byte offset)
-	add 	$t0,$t0,$s0		# address of array[i]
-	lw 	$a0,($t0)
-	li	$v0,1			# system call code for printing integers
-	syscall
-	li 	$v0,4 			# system call code for print string
-	la 	$a0,fancy		# address of str
-	syscall				# print str
-	
-	j reverse			# repeat
 	
 	done:
 	

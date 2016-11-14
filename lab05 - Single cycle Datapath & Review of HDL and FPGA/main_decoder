@@ -1,0 +1,24 @@
+//----------------------------------------------
+// Add the required instructions to this code //
+//---------------------------------------------- 
+
+module maindec(input  [5:0] op,
+               output       regwrite, regdst,
+               output       alusrc, branch, 
+               output       memwrite, memtoreg,
+               output [1:0] aluop, 
+               output       jump);
+
+  reg [8:0] controls;
+
+  assign {branch, jump, regwrite, alusrc, regdst,memwrite, memtoreg, aluop} = controls;
+
+  always @(*)
+    case(op)
+       
+        6'b000000: controls <= 9'b001010010; 
+        6'b100011: controls <= 9'b001100100; 
+        6'b001000: controls <= 9'b001100000;  
+
+    endcase
+endmodule

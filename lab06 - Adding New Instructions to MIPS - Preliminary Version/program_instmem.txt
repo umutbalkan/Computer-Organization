@@ -1,0 +1,43 @@
+main:
+addi  $v0, $zero, 0x0005
+addi $v1, $zero, 0x000C
+addi $a3, $v1, 0xFFF7
+or $a0 $a3 $v0
+and $a1 $v1 $a0
+add $a1 $a1 $a0
+beq $a1, $a3, aaa
+slt $a0 $v1 $a0
+beq $a0 $zero ccc
+sll $v1 $v1 0x0001
+ccc:
+slt $a0 $a3 $v0
+add $a3 $a0 $a1
+sub $a3 $a3 $v0
+sw $a3, 0x10000000($v1)
+lw $v0 0x10000018 ($zero)
+j aaa
+addi $v0 $zero 0x0001
+aaa:
+	addi $v0, $v1, 5
+bbb:
+	j bbb
+	
+
+0x20020005
+0x2003000C
+0x2067FFF7
+0x00E22025
+0x00642824
+0x00A42820
+0x10A7000A
+0x0064202A
+0x10800001
+0x00E2202A
+0x00853820
+0x00E23822
+0xAC670000
+0x8C020018
+0x08000011
+0x20020001
+0x20620101
+0x08000012
